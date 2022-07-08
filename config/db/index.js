@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 async function connect() {
     try {
-        await mongoose.connect('mongodb://localhost:27017/Midterm', {
+        await mongoose.connect('mongodb+srv://520H0401:520H0401_29122002@mycluster.ov1s4.mongodb.net/myCluster?retryWrites=true&w=majority', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })

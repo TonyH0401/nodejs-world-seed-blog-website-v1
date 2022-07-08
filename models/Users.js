@@ -5,15 +5,18 @@ mongoose.plugin(slug);
 
 const Users = new Schema(
     {
+        googleId: String,
         username: { type: String, require: true },
-        email: { type: String, require: true },
-        age: Number,
+        email: { type: String, require: true , unique: true},
         password: { type: String, require: true },
+        dob: Date,
         phone: { type: String },
-        blog_counter: { type: Number },
-        user_bio: { type: String },
         avatar: { type: String },
-        slug: { type: String, slug: 'username', sparse: true }
+        user_bio: { type: String },
+        personal_concept: {type: String},
+        main_color: {type: String},
+        blog_counter: { type: Number },
+        slug: { type: String, slug: 'username', sparse: true, unique: true }
     },
     {
         timestamps: true,
