@@ -9,8 +9,8 @@ const upload_dir = pathapi.join(__dirname, "../uploads")
 const multiparty = require('multiparty');
 const Users = require('../models/Users');
 const Comments = require('../models/Comments');
-const {normalizeDate, normalizeDateAndTime} = require('../libs/functions');
-
+const { normalizeDate, normalizeDateAndTime } = require('../libs/functions');
+const { fstat } = require('fs');
 
 
 // Blogs.find({}, (err, blogs) => {
@@ -35,7 +35,7 @@ router.get('/create', (req, res) => {
 		return res.redirect('/users/login');
 	}
 
-	res.render('create', {status: 'Đăng Xuất'});
+	res.render('create', { status: 'Đăng Xuất' });
 })
 
 
@@ -45,7 +45,7 @@ router.post('/create', (req, res) => {
 		if (err) {
 			return res.render("create", { message: err.message, ...fields })
 		}
-		
+
 		if (!files.photo || files.photo.length == 0) {
 			return res.render("create", { message: "Chưa chọn file hình", ...fields });
 		}
@@ -63,10 +63,13 @@ router.post('/create', (req, res) => {
 
 		let newname = filename.substr(0, filename.length - ext.length - 1)
 		let idx = ""
+		
+		
 		//cố định phần mở rộng là png vì người dùng có thể upload 2 file cùng tên khác phần mở rộng thì hệ thống sẽ không thể lưu 2 file ghi chú cùng tên với phần mở rộng là txt được.
 		//có thể không cần cố định phần mở rộng bằng cách dùng tên file ngẫu nhiên
 		ext = "png"
 		filename = newname + '.' + ext
+		
 		while (fileapi.isexist(pathapi.join(upload_dir, filename))) {
 			if (!idx)
 				idx = 1
@@ -75,31 +78,35 @@ router.post('/create', (req, res) => {
 			filename = newname + idx.toString() + '.' + ext
 			// console.log(upload_dir, filename)
 		}
+		
 		let newpath = pathapi.join(upload_dir, filename)
+		fileapi.resize(path, newpath, 1920, 1080);
 
 		fileapi.move(path, newpath, (err) => {
 			if (err)
 				return res.render("create", { message: "không thể lưu tập tin: " + err.message, ...fields })
 			//lưu ghi chú nếu có
 			if (fields.note && fields.note.length > 0 && fields.note[0]) {
+
 				fileapi.writefile(pathapi.join(upload_dir, newname + idx.toString() + '.txt'), fields.note[0], err => {
 					if (err)
 						console.log('Lưu ghi chú bị lỗi:', err)
 				})
 			}
 		})
-
+		
+		
 		var user = req.session.user;
 
 		var author = {
-				username: user.username,
-				avatar: user.avatar,
-				personal_concept: user.personal_concept,
-				main_color: user.main_color,
-				user_bio: user.user_bio,
-				authorSlug: user.slug,
+			username: user.username,
+			avatar: user.avatar,
+			personal_concept: user.personal_concept,
+			main_color: user.main_color,
+			user_bio: user.user_bio,
+			authorSlug: user.slug,
 		}
-		
+
 
 		var myPost = {
 			author: author,
@@ -110,39 +117,59 @@ router.post('/create', (req, res) => {
 			content: fields.content[0]
 		}
 
-		var count = user.blog_counter + 1;
-		
-		Users.findOneAndUpdate({username: user.username},{blog_counter: count},{}, () => {
-			new Blogs(myPost).save().then(res.redirect('/'));
-		})
-		
+		Users.findOne({ _id: user._id })
+			.then(user => {
+				new Blogs(myPost).save();
+				user.blog_counter++;
+				user.save().then(res.redirect('/'))
+					
+			})		
 	})
 })
 
-router.get('/delete/:id',(req, res, next) => {
-	Blogs.findOne({_id: req.params.id})
+// delete a blog
+router.get('/delete/:id', (req, res, next) => {
+	Blogs.findOne({ _id: req.params.id })
 		.then(blog => {
-			if(!blog) {
+			if (!blog) {
 				return res.redirect('/');
 			}
 
-			var count = req.session.user.blog_counter - 1;
+			// var count = req.session.user.blog_counter - 1;
 			var userId = req.session.user._id;
 
-			Users.findOneAndUpdate({_id: userId},{blog_counter: count},{}, () => {
-				blog.delete().then(res.redirect('/'));
-			})
+			const imgName = blog.image;
+			fileapi.unlink(pathapi.join(upload_dir, imgName));
+
+			Users.findOne({_id: userId})
+				.then(user => {
+					blog.delete();
+					user.blog_counter--;
+					user.save().then(res.redirect('/'));
+				})
 		})
 		.catch(next);
-	
+})
+
+
+router.post('/edit/:id', (req, res, next) => {
+	const { new_content, id } = req.body;
+	// console.log(new_content);
+	Blogs.findOne({ slug: id })
+		.then(blog => {
+			blog.content = new_content;
+			blog.save();
+			return res.redirect(`/blogs/${id}`);
+		})
 })
 
 router.post('/:id/comments', (req, res, next) => {
-	if(!req.session.user) {
+	const content = req.body.comment;
+	if (!req.session.user) {
 		return res.redirect('/users/login');
 	}
 
-	if(!req.body.content) {
+	if (!content) {
 		return res.redirect(`/blogs/${req.session.slug}`);
 	}
 
@@ -155,11 +182,11 @@ router.post('/:id/comments', (req, res, next) => {
 			name: current_user.username,
 			avatar: current_user.avatar,
 		},
-		content: req.body.content,
+		content: content,
 		likes: 0
 	}
 
-	new Comments(comment).save().then(res.redirect(`/blogs/${req.session.slug}`));
+	new Comments(comment).save();
 })
 
 
@@ -175,21 +202,24 @@ router.get('/:slug', (req, res, next) => {
 
 			const username = req.session.user ? req.session.user.username : 'Người lạ';
 			let liked = blog.likers.includes(username);
-			
-			console.log(liked);
 
-			var data = { 
+			const current_slug = req.session.user ? req.session.user.slug : 'Người lạ';
+			const current_main_color = req.session.user ? req.session.user.main_color : '#000000';
+			const current_concept = req.session.user ? req.session.user.personal_concept : 'World Seed';
+			// console.log(liked);
+
+			var data = {
 				blog_id: blog._id,
-				author: blog.author, 
-				type: blog.type, 
-				image: blog.image, 
-				title: blog.title, 
+				author: blog.author,
+				type: blog.type,
+				image: blog.image,
+				title: blog.title,
 				content: blog.content,
-				createdAt: normalizeDateAndTime(blog.createdAt) 
+				createdAt: normalizeDateAndTime(blog.createdAt)
 			};
 
 			var comments = [];
-			Comments.find({post_id: blog._id})
+			Comments.find({ post_id: blog.slug })
 				.then(cms => {
 					comments = cms.map(c => {
 						return {
@@ -201,22 +231,30 @@ router.get('/:slug', (req, res, next) => {
 						}
 					})
 
-					return res.render('blog-single', { 
+					return res.render('blog-single', {
 						layouts: true,
 						liked: liked,
 						signed: req.session.user ? true : false,
 						num_likes: blog.likers.length,
 						id: username == blog.author.username ? blog._id : null,
 						concept: blog.author.personal_concept,
+						// concept: current_concept,
 						main_color: blog.author.main_color,
+						// main_color: current_main_color,
 						avatar: blog.author.avatar,
 						username: username,
-						slug: blog.slug,
+						useravatar: req.session.user ? req.session.user.avatar : "",
+						// slug: blog.slug,
+						slug: current_slug,
 						bloggerName: blog.author.username,
-						bloggerSlug: blog.author.slug,
-						status: req.session.user ? 'Logout' : 'Login',
+						bloggerSlug: blog.author.authorSlug,
+						status: req.session.user ? 'Đăng xuất' : 'Đăng nhập',
 						data: data,
-						comments: comments
+						comments: comments,
+						// hidebox: true,
+						googleId: (req.session.user && req.session.user.googleId) ? true : false,
+						bloggerBio: blog.author.user_bio,
+						slides: true,
 					})
 				})
 				.catch(err => {
@@ -228,24 +266,25 @@ router.get('/:slug', (req, res, next) => {
 })
 
 router.post('/:slug', (req, res, next) => {
-	
-	Blogs.findOne({slug: req.params.slug})
+	console.log(req.body.username, req.body.signal);
+	Blogs.findOne({ slug: req.params.slug })
 		.then(blog => {
-			
-			if(!blog) {
+			if (!blog) {
 				return res.redirect('/');
 			}
-			if(req.body.signal) {
+			if (req.body.signal) {
 				blog.likers.push(req.body.username);
 				blog.save();
 			}
-			else {			
+			else {
 				blog.likers.remove(req.body.username);
 				blog.save();
 			}
 		})
 		.catch(next);
 })
+
+
 
 module.exports = router;
 

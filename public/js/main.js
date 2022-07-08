@@ -1,3 +1,5 @@
+// const { normalizeDateAndTime } = require("../../libs/functions");
+
 (function($) {
 
 	'use strict';
@@ -203,13 +205,13 @@ $('#likeBtn').click(function() {
   count++;
   document.getElementById('like-count').innerHTML = count;
   
-
+  const username = $('.user').text().trim();
   $.ajax({
     url: window.location.pathname,
     method: 'POST',
     data: {
       signal: true,
-      username: $('.user').text(),
+      username
     },
     
     success: function(result) {
@@ -225,12 +227,12 @@ $('#unlikeBtn').click(function() {
   count--
   document.getElementById('like-count').innerHTML = count;
   
-
+  const username = $('.user').text().trim();
   $.ajax({
     url: window.location.pathname,
     method: 'POST',
     data: {
-      username: $('.user').text(),
+      username
     },
     
     success: function(result) {
@@ -239,6 +241,91 @@ $('#unlikeBtn').click(function() {
   })
 })
 
+$('.edit-post').click(async function(e) {
+  e.preventDefault();
+  const old_content = await document.getElementById('post-content').innerHTML;
+  $('#post-content').hide();
+  document.getElementById('edit-post-box').value = old_content;
+  $('#form-edit-post').removeClass('d-none').focus();
+})
+
+$('#confirm-edit-post').click(async function(e) {
+  e.preventDefault();
+  
+  const new_content = await document.getElementById('edit-post-box').value;
+  const urls = window.location.pathname.split('/');
+  const id = urls[2];
+  console.log(new_content);
+
+  $('#form-edit-post').hide();
+  document.getElementById('post-content').innerHTML = new_content;
+  
+  
+
+  $.ajax({
+    url: "/" + urls[1] + "/edit/" + urls[2],
+    method: 'POST',
+    data: {
+      new_content: new_content,
+      id: id // => req.body
+    },
+    
+    success: function(result) {
+      $('#post-content').show();
+    }
+  })
+})
+
+function normalizeDateAndTime(date) {
+  var hourString = date.getHours();
+	var minuteString = date.getMinutes();
+
+	if (hourString < 10) {
+		hourString = '0' + hourString;
+	}
+
+	if (minuteString < 10) {
+		minuteString = '0' + minuteString;
+	}
 
 
+	var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	return month[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() + ' At ' + hourString + ':' + minuteString;
+}
 
+$('#post-comment').click(function(e) {
+  e.preventDefault();
+
+  var username = document.getElementById('username-comment').innerHTML;
+  var avatar = document.getElementById('avatar-comment').innerHTML;
+  var comment = document.getElementById('message').value;
+  var createdAt = normalizeDateAndTime(new Date());
+
+  let html = document.createElement('li');
+  console.log();
+  html.className = 'comment';
+  html.innerHTML = `<div class="vcard">
+                        <img src="../uploads/${avatar}" alt="Image placeholder">
+                      </div>
+                      <div class="comment-body">
+                        <h3>${username}</h3>
+                        <div class="meta">${createdAt}</div>
+                        <p>${comment}</p>
+                      </div>`
+
+  document.getElementById('comment-list').appendChild(html);
+  document.getElementById('message').value = '';
+
+  console.log(window.location.pathname);
+
+  $.ajax({
+    url: window.location.pathname + '/comments',
+    method: 'POST',
+    data: {
+      username, avatar, comment, createdAt
+    },
+    success: function(result) {
+
+    }
+  })
+})

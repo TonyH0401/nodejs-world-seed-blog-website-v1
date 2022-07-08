@@ -12,12 +12,12 @@ exports.normalizeDateAndTime = function (date) {
 
 
 	var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	return month[date.getMonth() - 1] + ' ' + date.getDate() + ', ' + date.getFullYear() + ' At ' + hourString + ':' + minuteString;
+	return month[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear() + ' At ' + hourString + ':' + minuteString;
 }
 
 exports.normalizeDate = function (date) {
 	var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	return month[date.getMonth() - 1] + ' ' + date.getDate() + ', ' + date.getFullYear();
+	return month[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
 }
 
 
@@ -49,3 +49,7 @@ exports.calculateAge = function (birthday) { // birthday is a date
 	return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
+
+exports.count = function(value, arr) {
+	return arr.filter(x => x.type == value).length;
+}

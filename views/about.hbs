@@ -1,48 +1,160 @@
+<!-- END header -->
 
-      <!-- END header -->
 
-
-    <section class="site-section pt-5">
-      <div class="container">
-        
-        <div class="row blog-entries">
-          <div class="col-md-12 col-lg-8 main-content">
-            
-            <div class="row">
-              <div class="col-md-12">
-                <h2 class="mb-4">Hi There! I'm {{bloggerName}}</h2>
-                {{!-- <p class="mb-5"><img src="images/img_6.jpg" alt="Image placeholder" class="img-fluid"></p> --}}
-                <p>{{user_bio}}</p>
+<section class="site-section pt-5">
+  <div class="container">
+    <section class="row blog-entries">
+      <div class="col-md-12 main-content mb-5 ">
+        <div class="row">
+          <div class="col-md-3 text-center">
+            <div id="blogger-avatar">
+              <img style=""  width="200px" src="/uploads/{{avatar}}" alt="">
+            </div>
+            {{#if auth}}
+            <div style="background-color: {{main_color}};" id="edit-profile-btn" class="btn btn-primary py-2 mt-3 ">Edit Profile</div>
+            {{/if}}
+            <div id="confirm-box" class="row mt-2 d-none">
+              <div class="col-md-6 px-1">
+                <div id="confirm-profile-btn" class="w-100 btn btn-info py-2 px-1 mt-3">Confirm</div>
+              </div>
+              <div class="col-md-6 px-1">
+                  <div id="cancel-profile-btn" class="w-100 btn btn-danger py-2 px-1 mt-3">Cancel</div>
               </div>
             </div>
-
-            <div class="row mb-5 mt-5">
-              <div class="col-md-12 mb-5">
-                <h2>My Latest Posts</h2>
-              </div>
-              <div class="col-md-12">
-                {{#each data}}
-                <div class="post-entry-horzontal">
-                  <a href="/blogs/{{slug}}">
-                    <div class="image" style="background-image: url('/uploads/{{image}}');"></div>
-                    <span class="text">
-                      <div class="post-meta">
-                        <span class="author mr-2"><img src="{{avatar}}" alt="{{authorName}}"> {{authorName}}</span>&bullet;
-                        <span class="mr-2">{{createdAt}} </span> &bullet;
-                        <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                      </div>
-                      <h2>{{title}}</h2>
-                    </span>
-                  </a>
-                </div>
-                {{/each}}
-                <!-- END post -->
-
-              </div>
-            </div>
-
           </div>
 
-          <!-- END main-content -->
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-6">
+              <span style="color: {{main_color}};" class="ti-user col-1"> </span> <span id="name-box">{{bloggerName}} </span>
+              <br>
+              <span style="color: {{main_color}};" class="ti-calendar col-1 "> </span> <span id="date-box">{{bloggerDOB}}</span>
+              {{!-- <input id="date-edit" type="date" class="form-control w-50 d-none edit-box" > --}}<br>
+              <span style="color: {{main_color}};" class="ti-email col-1"> </span> <span>{{bloggerEmail}}</span>
+              <br>
+              <span style="color: {{main_color}};" class="ti-mobile col-1 "> </span> <span id="phone-box" >{{bloggerPhone}}</span>
+              {{!-- <input id="phone-edit" type="text" class="form-control w-50 d-none edit-box" ><br> --}}<br>
+              <span style="color: {{main_color}};" class="ti-time col-1"></span> <span>{{bloggerCreatedAt}}</span>
+              <br>
+              <span style="color: {{main_color}};" class="ti-bookmark col-1"></span> <span>{{blogCounter}} posts</span>
+              <br>
+            </div>
+            
+          <div class="col-md-6">
+              <span style="color: {{main_color}};" class="ti-location-pin col-1 "> </span> <span id="location-box" class="need-edit">{{bloggerLocation}} </span>
+              <input id="location-edit" type="text" class="form-control w-50 d-none edit-box" ><br>
+              <span style="color: {{main_color}};" class="ti-briefcase col-1 "> </span> <span id="job-box" class="need-edit">{{bloggerJob}}</span>
+              <input id="job-edit" type="text" class="form-control w-50 d-none edit-box" ><br>
+              <span style="color: {{main_color}};" class="ti-face-smile col-1 "> </span> <span id="status-box" class="need-edit">{{bloggerRela}}</span>
+              <input id="status-edit" type="text" class="form-control w-50 d-none edit-box" ><br>
+              <span style="color: {{main_color}};" class="ti-heart col-1 "> </span> <span id="fav-box" class="need-edit">{{bloggerFav}}</span>
+              <input id="fav-edit" type="text" class="form-control w-50 d-none edit-box" ><br>
+              <span style="color: {{main_color}};" class="ti-world col-1 "></span> <span class="need-edit"><a id="link-box" style="color: {{main_color}};" href="{{bloggerLink}}" target="_blank">{{bloggerLink}}</a> </span>
+              <input id="link-edit" type="text" class="form-control w-50 d-none edit-box"><br>
+              <span style="color: {{main_color}};" class="ti-thumb-up col-1"></span> <span>{{bloggerLike}} likes</span><br>
+          </div>
+            </div>
+          </div>
+           
+        </div>
+        
+      </div>
 
-          
+      <div class="col-md-12 col-lg-8 main-content">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="mb-4">Hi There! I'm {{bloggerName}}</h2>
+            {{!-- <p class="mb-5"><img src="images/img_6.jpg" alt="Image placeholder" class="img-fluid"></p> --}}
+            <p>{{user_bio}}</p>
+          </div>
+        </div>
+
+        <div class="row mb-5 mt-5">
+          <div class="col-md-12 mb-5">
+            <h2>My Latest Posts</h2>
+          </div>
+          <div class="col-md-12">
+            {{#each data}}
+            <div class="post-entry-horzontal">
+              <a href="/blogs/{{slug}}">
+                <div class="image" style="background-image: url('/uploads/{{image}}');"></div>
+                <span class="text">
+                  <div class="post-meta">
+                    <span class="author mr-2"><img src="/uploads/{{avatar}}" alt="{{authorName}}">
+                      {{authorName}}</span>&bullet;
+                    <span class="mr-2">{{createdAt}} </span> &bullet;
+                    <span class="ml-2"><span class="ti-thumb-up"></span> {{num_likes}} </span>
+                  </div>
+                  <h2>{{title}}</h2>
+                </span>
+              </a>
+            </div>
+            {{/each}}
+            <!-- END post -->
+          </div>
+        </div>
+      </div>
+    </section>
+</section>
+<!-- END main-content -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>  
+  $(document).ready(function() {
+
+    $('#edit-profile-btn').click(function() {
+      $('.edit-box').removeClass('d-none');
+
+      $('.need-edit').hide();
+
+      $('#confirm-box').removeClass('d-none');
+      $('#edit-profile-btn').hide();
+
+      $('#cancel-profile-btn').click(function(e) {
+        e.preventDefault();
+        $('#confirm-box').addClass('d-none');
+        $('#edit-profile-btn').show();
+
+        $('.need-edit').show();
+        $('.edit-box').addClass('d-none');
+      })
+
+      $('#confirm-profile-btn').click(function(e) {
+        e.preventDefault();
+
+        const urls = window.location.pathname.split('/');
+        const location  = document.getElementById('location-edit').value;
+        const job  = document.getElementById('job-edit').value;
+        const status  = document.getElementById('status-edit').value;
+        const fav  = document.getElementById('fav-edit').value;
+        const link  = document.getElementById('link-edit').value;
+
+        document.getElementById('location-box').innerHTML = location ? location : "Chưa cập nhật";
+        document.getElementById('job-box').innerHTML = job ? job : "Chưa cập nhật";
+        document.getElementById('status-box').innerHTML = status ? status : "Chưa cập nhật";
+        document.getElementById('fav-box').innerHTML = fav ? fav : "Chưa cập nhật";
+        document.getElementById('link-box').innerHTML = link ? link : "Chưa cập nhật";
+
+        $('#confirm-box').addClass('d-none');
+        $('#edit-profile-btn').show();
+
+        $('.need-edit').show();
+        $('.edit-box').addClass('d-none');
+
+        $.ajax({
+          url: `/` + urls[1] + `/update-info/` + urls[2],
+          method: 'POST',
+          data: {
+            slug: urls[2],
+            location, job, status, fav, link
+          },
+          success: function(result) {
+            console.log(result);
+          },
+        })
+
+        
+      })
+    })
+  })
+</script>
