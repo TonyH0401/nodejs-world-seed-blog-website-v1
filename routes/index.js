@@ -36,7 +36,7 @@ router.get('/create', (req, res) => {
 		return res.redirect('/login');
 	}
 
-	res.render('create');
+	res.render('create', {username: req.session.username, status: 'Đăng Xuất'});
 })
 
 const multiparty = require('multiparty');
@@ -90,6 +90,8 @@ router.post('/create', (req, res) => {
 			}
 		})
 
+
+
 		var myPost = {
 			author: fields.author[0],
 			title: fields.title[0],
@@ -102,7 +104,6 @@ router.post('/create', (req, res) => {
 	})
 })
 
-// REGISTER
 router.post('/register', (req, res) => {
 	var myUser = {
 		username: req.body.username,
@@ -110,7 +111,7 @@ router.post('/register', (req, res) => {
 		age: req.body.age,
 		password: req.body.password,
 		phone: null,
-		blog_counter: null,
+		blog_counter: 0,
 		user_bio: null,
 
 	}
@@ -133,7 +134,6 @@ router.get('/register', (req, res) => {
 	res.render('register');
 })
 
-// LOGIN
 router.get('/login', (req, res) => {
 	req.session.destroy();
 	res.render('login');
@@ -174,7 +174,7 @@ router.get('/', (req, res, next) => {
 				}
 			})
 
-			return res.render('index', { slug: req.session.slug, status: req.session.username ? 'Đăng Xuất' : 'Đăng Nhập', username: req.session.username ? req.session.username : 'Người lạ', data: data })
+			return res.render('index', {slug: req.session.slug, status: req.session.username ? 'Đăng Xuất' : 'Đăng Nhập', username: req.session.username ? req.session.username : 'Người lạ', data: data })
 		})
 		.catch(next);
 });

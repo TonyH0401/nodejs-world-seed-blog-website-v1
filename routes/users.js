@@ -23,14 +23,13 @@ router.get('/:slug', (req, res, next) => {
     }).catch(next)
 })
 
-// EDIT USER
 router.post('/:slug/edit', (req, res, next) => {
   // var data = {phone: req.body.phone, user_bio: req.body.user_bio}
-  Users.findOne({ slug: req.params.slug })
-    .then(user => {
-      var data = { ...user._doc, phone: req.body.phone, user_bio: req.body.user_bio };
+  Users.findOne({slug: req.params.slug})
+    .then((user) => {
+      var data = {...user._doc, phone: req.body.phone, user_bio: req.body.user_bio};
+      
       user.delete();
-      // Users.delete(user);
       new Users(data).save().then(res.redirect('/'))
 
     })
@@ -44,8 +43,8 @@ router.get('/:slug/edit', (req, res, next) => {
         return res.send('404 Not found');
       }
 
-      var data = { slug: user.slug, username: user.username, email: user.email, age: user.age, phone: user.phone ? user.phone : 'Chưa có', blog_counter: user.blog_counter, user_bio: user.user_bio ? user.user_bio : 'Chưa có', slug: user.slug }
-      // console.log(user.slug)
+      var data = {slug: user.slug, username: user.username, email: user.email, age: user.age, phone: user.phone ? user.phone : 'Chưa có', blog_counter: user.blog_counter, user_bio: user.user_bio ? user.user_bio : 'Chưa có', slug: user.slug }
+
       // return res.render('user', { username: req.session.username ? req.session.username : 'Người lạ', data: data })
 
       return res.render('edit', { data: data })

@@ -1,5 +1,4 @@
 body {
-  /* padding: 150px; */
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -7,24 +6,14 @@ a {
   color: #00B7FF;
 }
 
-.background {
-  background: url('https://images.unsplash.com/photo-1549645402-a9d655c5c344?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80') repeat-y;
-  background-size: 100%;
-  min-height: 100vh;
-}
-
-/* register-panel */
-.register-panel {
-  /* width: 100%; */
-  /* margin-top: 150px; */
-  padding-top: 100px;
-}
 
 /* BASIC */
 body {
   font-family: "Poppins", sans-serif;
   height: 100vh;
 }
+
+
 
 a {
   color: #92badd;
@@ -59,13 +48,13 @@ h2 {
   justify-content: center;
   width: 100%;
   min-height: 100%;
-  padding: 80px;
+  padding: 20px;
 }
 
 #formContent {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
-  background: #fff;
+  /* background: rgb(59, 147, 168); */
   padding: 30px;
   width: 90%;
   max-width: 450px;
@@ -74,11 +63,10 @@ h2 {
   -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   text-align: center;
-  /* opacity: 0.4; */
 }
 
 #formFooter {
-  background-color: #f6f6f6;
+  /* background-color: #f6f6f6; */
   border-top: 1px solid #dce8f1;
   padding: 25px;
   text-align: center;
@@ -89,6 +77,7 @@ h2 {
 
 
 /* TABS */
+
 h2.inactive {
   color: #cccccc;
 }
@@ -101,9 +90,6 @@ h2.active {
 
 
 /* FORM TYPOGRAPHY*/
-.top-buffer {
-  margin-top: 150px;
-}
 
 input[type=button],
 input[type=submit],
@@ -127,14 +113,12 @@ input[type=reset] {
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  align-items: center;
 }
 
 input[type=button]:hover,
 input[type=submit]:hover,
 input[type=reset]:hover {
   background-color: #39ace7;
-  align-items: center;
 }
 
 input[type=button]:active,
@@ -145,21 +129,23 @@ input[type=reset]:active {
   -o-transform: scale(0.95);
   -ms-transform: scale(0.95);
   transform: scale(0.95);
-  align-items: center;
 }
+
+
 
 input[type=text],
 input[type=password],
 input[type=email],
 input[type=age] {
   background-color: #f6f6f6;
-  border: none;
-  color: #0d0d0d;
+  border: #388580 2px solid;
+  color: #DA7F8F;
+  font-weight: 500;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 17px;
   margin: 5px;
   width: 85%;
   border: 2px solid #f6f6f6;
@@ -170,17 +156,13 @@ input[type=age] {
   transition: all 0.5s ease-in-out;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
-  align-items: center;
 }
 
-input[type=text]:focus,
-input[type=password]:focus,
-input[type=email]:focus,
-input[type=age]:focus {
-  /* background-color: #fff; */
+/* focus */
+input[type=text]:focus, input[type=password]:focus, textarea:focus {
   background-color: black;
   border-bottom: 2px solid #5fbae9;
-  color: #da7f8f;
+  color: #DA7F8F;
 }
 
 input[type=text]:placeholder {
@@ -192,6 +174,24 @@ input[type=text]:placeholder {
 /* ANIMATIONS */
 
 /* Simple CSS3 Fade-in-down Animation */
+.background {
+  background: url('https://images.unsplash.com/photo-1494861895304-fb272971c078?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80') repeat-y;
+  background-size: 100%;
+  min-height: 100vh;
+
+}
+
+/* login box */
+.login-box {
+  opacity: 0.7;
+}
+
+.login-box > input {
+  background-color: #fff;
+  color: #388580;
+}
+
+
 .fadeInDown {
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown;
@@ -334,6 +334,7 @@ input[type=text]:placeholder {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 .logo {
@@ -375,6 +376,7 @@ input[type=text]:placeholder {
   text-transform: uppercase;
 }
 
+/* this one */
 .blog-box {
   border: 2px solid #388580;
   border-radius: 0 8px 8px 0;
@@ -385,34 +387,36 @@ input[type=text]:placeholder {
   min-height: 500px;
 }
 
-.label {
-  width: 60px;
-}
-
 .card-body.index {
   color: #fff;
 }
 
+/* tên chủ đề */
 .card-title {
   color: #388580;
+}
+.label {
+  width: 60px;
 }
 
 .created-date {
   font-size: 12px;
-  color: rgba(253, 160, 133, 1)
+  color:rgba(253, 160, 133, 1)
 }
 
-/* trang blog chi tiết */
-.detail-blog {
+.detail-page {
   opacity: 0.9;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 550px;
 }
-/* trang tạo blog */
+
 .create-page {
   color: #388580;
-} 
- .create-page input {
+}
+
+
+
+.create-page input  {
   opacity: 0.8;
 }
 
@@ -428,34 +432,34 @@ input[type=text]:placeholder {
   background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
 }
 
-.edit-box {
+.edit-box{
   /* font-size: 5px; */
   height: 40px;
   width: 130px;
   line-height: 15px;
   padding: 0;
-  margin: 0;
 }
 
-.edit-box>input {
+.edit-box > input {
   font-size: 15px;
   padding: 0;
   margin: 0;
-  height: 80%;
+  height: 90%;
   width: 100%;
 }
 
+
 textarea {
-  background-color: #cccccc;
+  background-color: #f6f6f6;
   border: #388580 2px solid;
-  color: black;
+  color: #DA7F8F;
   font-weight: 500;
   text-decoration: none;
   display: inline-block;
   font-size: 17px;
   margin: 5px;
   width: 85%;
-  border: 2px solid #cccccc;
+  border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
@@ -463,12 +467,11 @@ textarea {
   transition: all 0.5s ease-in-out;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
-  vertical-align: top;
 }
 
-/* textarea:focus {
+textarea:focus {
   background-color: black;
   border-radius: 6px;
   font-weight: 500;
   border: #388580 2px solid;
-} */
+}
