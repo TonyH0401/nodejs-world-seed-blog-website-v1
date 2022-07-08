@@ -110,8 +110,8 @@ router.post('/update', (req, res, next) => {
 
 			current_user.password = hash;
 			// new Users(current_user).save().then(res.redirect('/users/login'));
+			new Users(current_user).save().then(res.redirect('/users/login'));
 		});
-		new Users(current_user).save().then(res.redirect('/users/login'));
 
 
 	})
@@ -139,21 +139,21 @@ router.post('/login', (req, res, next) => {
 				return res.render('login', { msg: 'Username does not exist' });
 			}
 
-			// bcrypt.compare(req.body.password, user.password, function (err, result) {
-			// 	if (result) {
-			// 		req.session.user = user;
-			// 		return res.redirect('/');
-			// 	}
-			// 	else {
-			// 		return res.render('login', { username: req.body.username, msg: 'Mật khẩu không chính xác' });
-			// 	}
-			// });
-			if (req.body.password === user.password) {
-				req.session.user = user;
-				return res.redirect('/');
-			} else {
-				return res.render('login', { username: req.body.username, msg: 'Mật khẩu không chính xác' });
-			}
+			bcrypt.compare(req.body.password, user.password, function (err, result) {
+				if (result) {
+					req.session.user = user;
+					return res.redirect('/');
+				}
+				else {
+					return res.render('login', { username: req.body.username, msg: 'Mật khẩu không chính xác' });
+				}
+			});
+			// if (req.body.password === user.password) {
+			// 	req.session.user = user;
+			// 	return res.redirect('/');
+			// } else {
+			// 	return res.render('login', { username: req.body.username, msg: 'Mật khẩu không chính xác' });
+			// }
 
 		})
 		.catch(next)
@@ -213,8 +213,10 @@ router.get('/:slug', (req, res, next) => {
 					}
 				})
 
+				const current_user = req.session.user
 
 				return res.render('about', {
+					googleId: (current_user && current_user.googleId) ? current_user.googleId : '',
 					layouts: true,
 					main_color: user.main_color,
 					concept: user.personal_concept,

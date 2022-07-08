@@ -179,3 +179,66 @@
 
 
 })(jQuery);
+
+const likeBtn = document.getElementById('likeBtn');
+const unlikeBtn = document.getElementById('unlikeBtn');
+
+likeBtn.addEventListener('click', function() {
+  likeBtn.classList.add('d-none');
+  unlikeBtn.classList.remove('d-none');
+})
+
+unlikeBtn.addEventListener('click', function() {
+  likeBtn.classList.remove('d-none');
+  unlikeBtn.classList.add('d-none');
+})
+
+// let heart = 'ti-heart';
+// let heart_broken = 'ti-heart-broken';
+
+
+
+$('#likeBtn').click(function() {
+  let count = parseInt(document.getElementById('like-count').innerHTML);
+  count++;
+  document.getElementById('like-count').innerHTML = count;
+  
+
+  $.ajax({
+    url: window.location.pathname,
+    method: 'POST',
+    data: {
+      signal: true,
+      username: $('.user').text(),
+    },
+    
+    success: function(result) {
+      
+    }
+  })
+})
+
+$('#unlikeBtn').click(function() {
+  // event.preventDefault();
+
+  let count = parseInt(document.getElementById('like-count').innerHTML);
+  count--
+  document.getElementById('like-count').innerHTML = count;
+  
+
+  $.ajax({
+    url: window.location.pathname,
+    method: 'POST',
+    data: {
+      username: $('.user').text(),
+    },
+    
+    success: function(result) {
+      
+    }
+  })
+})
+
+
+
+

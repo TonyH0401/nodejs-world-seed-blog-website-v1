@@ -15,13 +15,24 @@
                 <div class="dropdown">
                   <span class="author mr-2"><img src="/uploads/{{avatar}}" alt="{{bloggerName}}" class="mr-2"> {{bloggerName}}</span>&bullet;
                   <span class="mr-2">{{data.createdAt}}</span> &bullet;
-                  <span class="ml-2"><span class="fa fa-comments"></span> 3 </span>
+                  <span  class="ml-2"><span class="ti-thumb-up"></span> <span id="like-count">{{num_likes}}</span> </span> 
+                  {{#if signed}}
+                      {{#if liked}}
+                      <span id="unlikeBtn" class="btn btn-primary ti-heart"></span>
+                      <span id="likeBtn" class="d-none btn btn-primary ti-heart-broken"></span> 
+                    {{else}}
+                      <span id="unlikeBtn" class="d-none btn btn-primary ti-heart"></span>
+                      <span id="likeBtn" class="btn btn-primary ti-heart-broken"></span> 
+
+                    {{/if}}
+
+                  {{/if}}
                   {{#if id}}
                     <button class="btn bg-transparent dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <span class="fa fa-solid fa-gear"> </span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Info</a>
+                      {{!-- <a class="dropdown-item" href="#">Info</a> --}}
                       <a class="dropdown-item" href="#">Edit</a>
                       <a class="dropdown-item" href="/blogs/delete/{{id}}">Delete</a>
                     </div>
@@ -73,7 +84,7 @@
                     <textarea required name="content" id="message" cols="30" rows="10" class="form-control"></textarea>
                   </div>
                   <div class="form-group">
-                    <input type="submit" value="Post Comment" class="btn btn-primary">
+                    <input id="post-comment" type="submit" value="Post Comment" class="btn btn-primary">
                   </div>
 
                 </form>

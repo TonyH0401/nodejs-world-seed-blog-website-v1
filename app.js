@@ -73,11 +73,13 @@ passport.use(
         return done(null, existingUser);
       }
 
+      console.log(profile);
       const user = await new Users({
         googleId: profile.id,
         email: profile.emails[0].value,
         username: profile.displayName,
-        avatar: profile.photos[0].value,
+        main_color: '#000000',
+        avatar: "logo.png",
         slug: profile.displayName.toLowerCase().replace(' ','-'),
       }).save();
 
@@ -94,7 +96,7 @@ app.get(
 
 app.get('/auth/google/callback', passport.authenticate('google'), (req, res, next) => {
   if(req.user) {
-    req.session.username = req.user.username;
+    req.session.user = req.user;
     req.session.slug = req.user.slug;
     return res.redirect('/');
   }

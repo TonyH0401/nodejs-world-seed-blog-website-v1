@@ -1712,3 +1712,14 @@ input[type=text]:placeholder {
 
 /* Create Page */
 
+#likeBtn {
+  border-radius: 0.5rem;
+  border: 2px solid #17a2b8;
+  background-color: #17a2b8;
+}
+
+#unlikeBtn {
+  border-radius: 0.5rem;
+  border: 2px solid red;
+  background-color: red;
+}

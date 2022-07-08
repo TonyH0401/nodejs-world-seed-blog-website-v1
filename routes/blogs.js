@@ -97,7 +97,7 @@ router.post('/create', (req, res) => {
 				personal_concept: user.personal_concept,
 				main_color: user.main_color,
 				user_bio: user.user_bio,
-				slug: user.slug,
+				authorSlug: user.slug,
 		}
 		
 
@@ -173,6 +173,11 @@ router.get('/:slug', (req, res, next) => {
 				return res.render('blogs', { msg: "Không tìm thấy bài đăng này" });
 			}
 
+			const username = req.session.user ? req.session.user.username : 'Người lạ';
+			let liked = blog.likers.includes(username);
+			
+			console.log(liked);
+
 			var data = { 
 				blog_id: blog._id,
 				author: blog.author, 
@@ -182,8 +187,6 @@ router.get('/:slug', (req, res, next) => {
 				content: blog.content,
 				createdAt: normalizeDateAndTime(blog.createdAt) 
 			};
-
-			var username = req.session.user ? req.session.user.username : "Người lạ";
 
 			var comments = [];
 			Comments.find({post_id: blog._id})
@@ -200,11 +203,15 @@ router.get('/:slug', (req, res, next) => {
 
 					return res.render('blog-single', { 
 						layouts: true,
+						liked: liked,
+						signed: req.session.user ? true : false,
+						num_likes: blog.likers.length,
 						id: username == blog.author.username ? blog._id : null,
 						concept: blog.author.personal_concept,
 						main_color: blog.author.main_color,
 						avatar: blog.author.avatar,
 						username: username,
+						slug: blog.slug,
 						bloggerName: blog.author.username,
 						bloggerSlug: blog.author.slug,
 						status: req.session.user ? 'Logout' : 'Login',
@@ -216,6 +223,26 @@ router.get('/:slug', (req, res, next) => {
 					return res.json(err);
 				});
 
+		})
+		.catch(next);
+})
+
+router.post('/:slug', (req, res, next) => {
+	
+	Blogs.findOne({slug: req.params.slug})
+		.then(blog => {
+			
+			if(!blog) {
+				return res.redirect('/');
+			}
+			if(req.body.signal) {
+				blog.likers.push(req.body.username);
+				blog.save();
+			}
+			else {			
+				blog.likers.remove(req.body.username);
+				blog.save();
+			}
 		})
 		.catch(next);
 })

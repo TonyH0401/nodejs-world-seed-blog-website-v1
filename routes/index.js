@@ -15,17 +15,17 @@ Users.find({}, (err, users) => {
 		return
 	}
 	var default_user = {
-		username: "Lê Gia Phú",
-		email: "superbop@gmail.com",
+		username: "Phạm Nhật Vượng",
+		email: "phamnhatvuong@vingroup.com.vn",
 		password: 123123,
 		dob: new Date(1945, 10, 03),
-		phone: "0902-420-6969",
+		phone: "028-3622-6888",
 		avatar: "august.png",
-		user_bio: "This is my bio",
-		personal_concept: "Bóp",
+		user_bio: "This is our Vin Group",
+		personal_concept: "We are number #1",
 		main_color: "#2155CD",
 		blog_counter: 1,
-		slug: "le-gia-phu"
+		slug: "pham-nhat-vuong-admin"
 	}
 	new Users(default_user).save()
 })
@@ -38,12 +38,12 @@ Blogs.find({}, (err, blogs) => {
 	}
 	var default_blog = {
 		author: {
-			username: "Lê Gia Phú",
+			username: "Phạm Nhật Vượng",
 			avatar: "august.png",
-			personal_concept: "Bóp",
+			personal_concept: "We are number #1",
 			main_color: "#2155CD",
-			user_bio: "This is my bio",
-			authorSlug: "le-gia-phu",
+			user_bio: "This is our Vin Group",
+			authorSlug: "pham-nhat-vuong-admin"
 		},
 		title: "Ngày đêm tối",
 		type: "life",
@@ -60,7 +60,7 @@ Blogs.find({}, (err, blogs) => {
 router.get('/', (req, res, next) => {
 	Blogs.find({})
 		.then((blogs) => {
-			console.log(blogs);
+			
 			if (blogs.length == 0) {
 				return res.json({ success: false, msg: 'Chưa có blog' });
 			}
@@ -74,7 +74,8 @@ router.get('/', (req, res, next) => {
 					type: blog.type,
 					image: blog.image,
 					createdAt: normalizeDate(blog.createdAt),
-					slug: blog.slug
+					slug: blog.slug,
+					num_likes: blog.likers.length
 				}
 			})
 
@@ -86,18 +87,21 @@ router.get('/', (req, res, next) => {
 			}
 
 			var randomBlogger = data[Math.round(Math.random() * (len - 1))].author;
-			console.log(randomBlogger);
 			var current_user = req.session.user;
+			console.log(randomBlogger.authorSlug);
 			return res.render('index', {
+				googleId: (current_user && current_user.googleId) ? current_user.googleId : '',
 				layouts: true,
 				sidebars: false,
 				slides: slides,
+				signed: current_user ? true : false,
 				slug: current_user ? current_user.slug : '',
 				status: current_user ? 'Đăng Xuất' : 'Đăng Nhập',
 				username: current_user ? current_user.username : 'Người lạ',
 				bloggerName: randomBlogger.username,
-				bloggerSlug: randomBlogger.slug,
+				bloggerSlug: randomBlogger.authorSlug,
 				avatar: randomBlogger.avatar,
+				bloggerBio: randomBlogger.user_bio,
 				main_color: current_user ? current_user.main_color : 'black',
 				concept: 'World Seed',
 				data: data.reverse(),

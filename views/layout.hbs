@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/owl.carousel.min.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/themify-icons/themify-icons.css">
   <!-- Theme Style -->
   {{!--
   <link rel="stylesheet" href="css/style.css"> --}}
@@ -64,6 +65,7 @@
             <ul class="navbar-nav mx-auto">
               <li class="nav-item">
                 <a class="nav-link active" href="/">Home</a>
+
               </li>
 
               <li class="nav-item dropdown">
@@ -85,13 +87,17 @@
                 <a class="nav-link" href="/users/contact">Contact</a>
               </li> --}}
 
+              {{#if googleId}}
+
+              {{else}}
               <li class="nav-item">
                 <a class="nav-link" href="/blogs/create">Create Post</a>
               </li>
+              {{/if}}
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
-                  {{username}}
+                  <span class="user">{{username}}</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
@@ -127,8 +133,14 @@
           <img src="/uploads/{{avatar}}" alt="Image Placeholder" class="img-fluid">
           <div class="bio-body">
             <h2>{{bloggerName}}</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem facilis sunt repellendus
-              excepturi beatae porro debitis voluptate nulla quo veniam fuga sit molestias minus.</p>
+            <p>
+              {{#if slides}}
+              {{bloggerBio}}
+              {{else}}
+              {{user_bio}}
+              {{/if}}
+
+            </p>
             <p><a href="/users/{{bloggerSlug}}" class="btn btn-primary btn-sm rounded">Read my bio</a></p>
             <p class="social">
               <a href="#" class="p-2"><span class="fa fa-facebook"></span></a>
@@ -217,7 +229,7 @@
   </div>
   </div>
   </section>
-{{!-- 
+  {{!--
   <footer class="site-footer">
     <div class="container">
       <div class="row mb-5">

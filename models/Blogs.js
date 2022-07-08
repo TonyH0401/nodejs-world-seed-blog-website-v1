@@ -18,6 +18,7 @@ const Blogs = new Schema(
         content: { type: String, sparse: true },
         image: { type: String, require: true },
         description: { type: String, require: true },
+        likers: [String],
         slug: { type: String, slug: 'title', sparse: true }
     },
     {
