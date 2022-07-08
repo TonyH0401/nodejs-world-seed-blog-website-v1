@@ -7,29 +7,27 @@ const fileapi = require("../libs/libfiles")
 const allow_extension = ["png", "jpg", "gif", "jpeg", "txt"]
 const upload_dir = pathapi.join(__dirname, "../uploads")
 const multiparty = require('multiparty');
+const Users = require('../models/Users');
+const Comments = require('../models/Comments');
+const {normalizeDate, normalizeDateAndTime} = require('../libs/functions');
 
 
-function normalizeDate(date) {
-	var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	return month[date.getMonth() - 1] + ' ' + date.getDate() + ', ' + date.getFullYear();
-}
 
+// Blogs.find({}, (err, blogs) => {
+// 	if (blogs.length > 0) {
+// 		return;
+// 	}
 
-Blogs.find({}, (err, blogs) => {
-	if (blogs.length > 0) {
-		return;
-	}
+// 	var myDefaultBlog = {
+// 		username: "Lê Gia Phú",
+// 		title: 'The Science of Deduction',
+// 		image: 'https://picsum.photos/570/300',
+// 		description: 'This is a small description for this blog. Hope you guys enjoy it ^.^',
+// 		content: 'Sherlock Holmes took his bottle from the corner of the mantel-piece and his hypodermic syringe from its neat morocco case.',
+// 	}
 
-	var myDefaultBlog = {
-		username: "Lê Gia Phú",
-		title: 'The Science of Deduction',
-		image: 'https://picsum.photos/570/300',
-		description: 'This is a small description for this blog. Hope you guys enjoy it ^.^',
-		content: 'Sherlock Holmes took his bottle from the corner of the mantel-piece and his hypodermic syringe from its neat morocco case.',
-	}
-
-	new Blogs(myDefaultBlog).save();
-})
+// 	new Blogs(myDefaultBlog).save();
+// })
 
 // check session có chưa
 router.get('/create', (req, res) => {
@@ -112,31 +110,112 @@ router.post('/create', (req, res) => {
 			content: fields.content[0]
 		}
 
-		new Blogs(myPost).save().then(res.redirect('/'));
+		var count = user.blog_counter + 1;
+		
+		Users.findOneAndUpdate({username: user.username},{blog_counter: count},{}, () => {
+			new Blogs(myPost).save().then(res.redirect('/'));
+		})
+		
 	})
+})
+
+router.get('/delete/:id',(req, res, next) => {
+	Blogs.findOne({_id: req.params.id})
+		.then(blog => {
+			if(!blog) {
+				return res.redirect('/');
+			}
+
+			var count = req.session.user.blog_counter - 1;
+			var userId = req.session.user._id;
+
+			Users.findOneAndUpdate({_id: userId},{blog_counter: count},{}, () => {
+				blog.delete().then(res.redirect('/'));
+			})
+		})
+		.catch(next);
+	
+})
+
+router.post('/:id/comments', (req, res, next) => {
+	if(!req.session.user) {
+		return res.redirect('/users/login');
+	}
+
+	if(!req.body.content) {
+		return res.redirect(`/blogs/${req.session.slug}`);
+	}
+
+	var current_user = req.session.user;
+
+	var comment = {
+		post_id: req.params.id,
+		user: {
+			id: current_user._id,
+			name: current_user.username,
+			avatar: current_user.avatar,
+		},
+		content: req.body.content,
+		likes: 0
+	}
+
+	new Comments(comment).save().then(res.redirect(`/blogs/${req.session.slug}`));
 })
 
 
 router.get('/:slug', (req, res, next) => {
+	req.session.slug = req.params.slug;
 	Blogs.findOne({ slug: req.params.slug })
 		// đây gọi là promises
 		.then(blog => {
+
 			if (!blog) {
 				return res.render('blogs', { msg: "Không tìm thấy bài đăng này" });
 			}
 
-			var data = { author: blog.author, type: blog.type, image: blog.image, title: blog.title, content: blog.content, createdAt: normalizeDate(blog.createdAt) };
+			var data = { 
+				blog_id: blog._id,
+				author: blog.author, 
+				type: blog.type, 
+				image: blog.image, 
+				title: blog.title, 
+				content: blog.content,
+				createdAt: normalizeDateAndTime(blog.createdAt) 
+			};
 
-			return res.render('blog-single', { 
-				layouts: true, 
-				concept: blog.author.personal_concept,
-				main_color: blog.author.main_color,
-				avatar: blog.author.avatar,
-				username: req.session.user ? req.session.user.username : "Người lạ",
-				bloggerName: blog.author.username,
-				bloggerSlug: blog.author.slug,
-				data: data,
-			})
+			var username = req.session.user ? req.session.user.username : "Người lạ";
+
+			var comments = [];
+			Comments.find({post_id: blog._id})
+				.then(cms => {
+					comments = cms.map(c => {
+						return {
+							post_id: c.post_id,
+							user: c.user,
+							content: c.content,
+							likes: c.likes,
+							createdAt: normalizeDateAndTime(c.createdAt)
+						}
+					})
+
+					return res.render('blog-single', { 
+						layouts: true,
+						id: username == blog.author.username ? blog._id : null,
+						concept: blog.author.personal_concept,
+						main_color: blog.author.main_color,
+						avatar: blog.author.avatar,
+						username: username,
+						bloggerName: blog.author.username,
+						bloggerSlug: blog.author.slug,
+						status: req.session.user ? 'Logout' : 'Login',
+						data: data,
+						comments: comments
+					})
+				})
+				.catch(err => {
+					return res.json(err);
+				});
+
 		})
 		.catch(next);
 })

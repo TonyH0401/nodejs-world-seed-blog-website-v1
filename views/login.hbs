@@ -11,11 +11,12 @@
       <!-- Login Form -->
       <form method="POST" action="/users/login">
         <div class="login-box">
-          <input autofocus name="username" type="text" id="username" class="fadeIn second" name="login" placeholder="login">
+          <input autofocus name="email" type="email" id="email" class="fadeIn second" name="login"
+            placeholder="email">
 
           <input name="password" type="password" id="password" class="fadeIn third" name="login" placeholder="password">
         </div>
-      
+
 
         <input type="submit" class="fadeIn fourth" value="Log In">
 
@@ -44,12 +45,14 @@
       <div id="formFooter">
         <div class="row ">
           <div class="p-2 col-lg-12 col-md-12">
-            <a class="p-2 w-75 btn btn-outline-dark bg-secondary " href="/auth/google" role="button" style="text-transform:none; color: white">
-              <img width="20px"alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+            <a class="p-2 w-75 btn btn-outline-dark bg-secondary " href="/auth/google" role="button"
+              style="text-transform:none; color: white">
+              <img width="20px" alt="Google sign-in"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
               Continue with Google
             </a>
           </div>
-          
+
         </div>
         <a class="register-btn underlineHover" href="#">Sign up</a><br>
         <a class="underlineHover" href="#">Forgot Password?</a>
@@ -59,44 +62,37 @@
   </div>
 
   <div class="form-register fadeInDown">
-    
-        <div id="formContent">
-        
-        <div class="form-group">
-            <form action="/users/register" method="POST">
-            <div class="register-box"><br>
+
+    <div id="formContent">
+
+      <div class="form-group">
+        <form action="/users/register" method="POST">
+          <div class="register-box"><br>
             <input autofocus name="username" type="text" id="username" class="fadeIn second" placeholder="Username">
-            <input  name="email" type="email" id="username" class="fadeIn second" placeholder="Email Address">
+            <input name="email" type="email" id="username" class="fadeIn second" placeholder="Email Address">
             <input type="date" name="dob" id="dob" class="fadeIn second ">
-            <input name="password" type="password" id="password" class="fadeIn second" name="login" placeholder="Password">
-            </div>
-    
-            <input type="submit" class="fadeIn third" value="Register">
+            <input name="password" type="password" id="password" class="fadeIn second" name="login"
+              placeholder="Password">
+          </div>
 
-            {{#if msg}}
-            <div class="form-group">
-                <div class="mx-auto w-50 alert alert-danger alert-dismissible fade show">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    {{msg}}
-                </div>
-            </div>
-            {{/if}}
+          <input type="submit" class="fadeIn third" value="Register">
 
-            <!-- Remind Passowrd -->
-            <div id="formFooter">
-                <a class="login-btn underlineHover" href="#">Sign in</a><br>
-                <a class="underlineHover" href="#">Forgot Password?</a>
-            </div>
-							
+
+          <!-- Remind Passowrd -->
+          <div id="formFooter">
+            <a class="login-btn underlineHover" href="#">Sign in</a><br>
+            <a class="underlineHover" href="#">Forgot Password?</a>
+          </div>
+
       </div>
 
 
       <!-- Remind Passowrd -->
-      
+
 
     </div>
 
-  
+
 
   </div>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -106,20 +102,20 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('.form-register').hide();
-      $('.register-btn').click(function() {
+      $('.register-btn').click(function () {
         $('.form-login').hide();
         $('.form-register').fadeIn();
         $('#login').focus();
       })
 
-      $('.login-btn').click(function() {
+      $('.login-btn').click(function () {
         $('.form-register').hide();
         $('.form-login').fadeIn();
         $('#username').focus();
       })
     })
   </script>
-  
+
 </div>

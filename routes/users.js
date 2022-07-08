@@ -1,6 +1,7 @@
 var express = require('express');
-const Users = require('../models/Users');
 var router = express.Router();
+const Users = require('../models/Users');
+const Blogs = require('../models/Blogs');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const pathapi = require('path');
@@ -8,41 +9,32 @@ const fileapi = require("../libs/libfiles")
 const allow_extension = ["png", "jpg", "gif", "jpeg", "txt"]
 const upload_dir = pathapi.join(__dirname, "../uploads")
 const multiparty = require('multiparty');
+const { normalizeDate, calculateAge, validatorSignUp } = require('../libs/functions')
 
-function calculateAge(birthday) { // birthday is a date
-  var ageDifMs = Date.now() - birthday.getTime();
-  var ageDate = new Date(ageDifMs); // miliseconds from epoch
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
-}
 
-function normalizeDate(date) {
-	var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	return month[date.getMonth() - 1] + ' ' + date.getDate() + ', ' + date.getFullYear();
-}
 
-router.post('/register', (req, res) => {
+router.post('/register', validatorSignUp, (req, res) => {
 	var myUser = {
 		username: req.body.username,
 		email: req.body.email,
 		dob: req.body.dob,
 		password: req.body.password,
 		phone: '',
-    	personal_concept: '',
+		personal_concept: '',
 		main_color: '',
 		avatar: '',
 		blog_counter: 0,
 		user_bio: '',
 	}
 
-	Users.findOne({email: req.body.email }, (err, user) => {
+	// kiểm tra user có tồn tại
+	Users.findOne({ email: req.body.email }, (err, user) => {
 		if (err) {
 			return res.render('login', { msg: err })
 		}
-
 		if (user) {
 			return res.render('login', { msg: 'This email is existed.' });
 		}
-
 		req.session.temporary = myUser;
 		return res.render('update');
 	})
@@ -60,7 +52,7 @@ router.post('/update', (req, res, next) => {
 		if (err) {
 			return res.render("update", { message: err.message, ...fields })
 		}
-		
+
 		if (!files.photo || files.photo.length == 0) {
 			return res.render("update", { message: "Chưa chọn file hình", ...fields });
 		}
@@ -109,17 +101,19 @@ router.post('/update', (req, res, next) => {
 		current_user.phone = fields.phone[0];
 		current_user.main_color = fields.main_color[0];
 		current_user.avatar = filename;
+		current_user.user_bio = fields.user_bio[0];
 
-		bcrypt.hash(current_user.password, saltRounds, function(err, hash) {
-			if(err) {
-				return res.json({success: false, msg: err});
+		bcrypt.hash(current_user.password, saltRounds, function (err, hash) {
+			if (err) {
+				return res.json({ success: false, msg: err });
 			}
 
 			current_user.password = hash;
-			new Users(current_user).save().then(res.redirect('/users/login'));
-		});	
+			// new Users(current_user).save().then(res.redirect('/users/login'));
+		});
+		new Users(current_user).save().then(res.redirect('/users/login'));
 
-		
+
 	})
 })
 
@@ -135,112 +129,144 @@ router.get('/login', (req, res) => {
 //redirect là khi không gửi gì gì
 //redener là muốn render trang đó với dữ liệu 
 router.post('/login', (req, res, next) => {
-	if(!req.body.username) {
-		return res.render('login', {msg: 'Vui lòng nhập tài khoản'})
+	if (!req.body.email) {
+		return res.render('login', { msg: 'Vui lòng nhập tài khoản' })
 	}
 
-	Users.findOne({username: req.body.username})
-		.then((user) => {  
-			if(!user) {
-				return res.render('login', {msg: 'Username does not exist'});
+	Users.findOne({ email: req.body.email })
+		.then((user) => {
+			if (!user) {
+				return res.render('login', { msg: 'Username does not exist' });
 			}
 
-			bcrypt.compare(req.body.password, user.password, function(err, result) {
-				if(result) {
-					req.session.user = user;
-					return res.redirect('/');
-				}
-				else {
-					return res.render('login', {username: req.body.username, msg: 'Mật khẩu không chính xác'});
-				}
-			});	
+			// bcrypt.compare(req.body.password, user.password, function (err, result) {
+			// 	if (result) {
+			// 		req.session.user = user;
+			// 		return res.redirect('/');
+			// 	}
+			// 	else {
+			// 		return res.render('login', { username: req.body.username, msg: 'Mật khẩu không chính xác' });
+			// 	}
+			// });
+			if (req.body.password === user.password) {
+				req.session.user = user;
+				return res.redirect('/');
+			} else {
+				return res.render('login', { username: req.body.username, msg: 'Mật khẩu không chính xác' });
+			}
+
 		})
 		.catch(next)
 })
 
 
 router.get('/contact', (req, res, next) => {
-	if(!req.session.user) {
+	if (!req.session.user) {
 		return res.redirect('/users/login');
 	}
 
-  var current_user = req.session.user;
+	var current_user = req.session.user;
 
-	return res.render('contact', {layouts: true, 
-    main_color: current_user ? current_user.main_color : 'black', 
-    data: current_user
-  });
+	return res.render('contact', {
+		layouts: true,
+		main_color: current_user ? current_user.main_color : 'black',
+		data: current_user
+	});
 })
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-  if(!req.session.user) {
-    return res.redirect('/users/login');
-  }
+	if (!req.session.user) {
+		return res.redirect('/users/login');
+	}
 
-  res.sendStatus("404", {status: '404 Not Found'});
+	res.sendStatus("404", { status: '404 Not Found' });
 });
 
 
 
 
 router.get('/:slug', (req, res, next) => {
-  Users.findOne({slug: req.params.slug})
-    .then(user => {
-      if(!user) {
-        return res.render('about', {msg: '404 Not Found'});
-      }
+	Users.findOne({ slug: req.params.slug })
+		.then(user => {
+			if (!user) {
+				return res.render('about', { msg: '404 Not Found' });
+			}
 
-      return res.render('about', { layouts: true, 
-        main_color: user.main_color,
-        concept: user.personal_concept,
-        avatar: user.avatar,
-        username: req.session.user ? req.session.user.username : 'Người lạ',
-        bloggerName: req.session.user ? req.session.user.username : "Người lạ",
-        authorName: user.username,
-        status: req.session.user ? 'Logout' : 'Login'
-      });
-    })
 
-  var current_user = req.session.user;
-  
+			var data = [];
+			Blogs.find({ "author.username": user.username }, (err, blogs) => {
+				if (err) {
+					return res.json({ success: false, msg: err });
+				}
+
+				data = blogs.map(blog => {
+					return {
+						authorName: user.username,
+						title: blog.title,
+						content: blog.content,
+						image: blog.image,
+						avatar: user.avatar,
+						description: blog.description,
+						createdAt: normalizeDate(blog.createdAt),
+						slug: blog.slug,
+					}
+				})
+
+
+				return res.render('about', {
+					layouts: true,
+					main_color: user.main_color,
+					concept: user.personal_concept,
+					user_bio: user.user_bio,
+					avatar: user.avatar,
+					username: req.session.user ? req.session.user.username : 'Người lạ',
+					bloggerName: user.username,
+					status: req.session.user ? 'Logout' : 'Login',
+					data: data,
+				});
+			});
+		})
+		.catch(next);
+
 })
 
 router.post('/:slug/edit', (req, res, next) => {
-  // var data = {phone: req.body.phone, user_bio: req.body.user_bio}
-  Users.findOne({slug: req.params.slug})
-    .then((user) => {
-      var data = {...user._doc, phone: req.body.phone, user_bio: req.body.user_bio};
-      
-      user.delete();
-      new Users(data).save().then(res.redirect('/'))
+	// var data = {phone: req.body.phone, user_bio: req.body.user_bio}
+	Users.findOne({ slug: req.params.slug })
+		.then((user) => {
+			var data = { ...user._doc, phone: req.body.phone, user_bio: req.body.user_bio };
 
-    })
-    .catch(next)
+			user.delete();
+			new Users(data).save().then(res.redirect('/'))
+
+		})
+		.catch(next)
 })
 
 router.get('/:slug/edit', (req, res, next) => {
-  Users.findOne({ slug: req.params.slug })
-    .then(user => {
-      if (!user) {
-        return res.send('404 Not found');
-      }
-      
-      var data = {slug: user.slug, 
-        username: user.username, 
-        email: user.email, 
-        dob: !user.dob ? 'Chưa có' : calculateAge(user.dob), 
-        phone: user.phone ? user.phone : 'Chưa có', 
-        blog_counter: user.blog_counter, 
-        user_bio: user.user_bio ? user.user_bio : 'Chưa có', 
-        slug: user.slug,
-      }
+	Users.findOne({ slug: req.params.slug })
+		.then(user => {
+			if (!user) {
+				return res.send('404 Not found');
+			}
 
-      // return res.render('user', { username: req.session.username ? req.session.username : 'Người lạ', data: data })
+			var data = {
+				slug: user.slug,
+				username: user.username,
+				email: user.email,
+				dob: !user.dob ? 'Chưa có' : calculateAge(user.dob),
+				phone: user.phone ? user.phone : 'Chưa có',
+				blog_counter: user.blog_counter,
+				user_bio: user.user_bio ? user.user_bio : 'Chưa có',
+				slug: user.slug,
+			}
 
-      return res.render('edit', { data: data })
-    }).catch(next)
-  // res.render('edit')
+			// return res.render('user', { username: req.session.username ? req.session.username : 'Người lạ', data: data })
+
+			return res.render('edit', { data: data })
+		}).catch(next)
+	// res.render('edit')
 })
 
 

@@ -5,9 +5,16 @@ mongoose.plugin(slug);
 
 const Blogs = new Schema(
     {
-        author: {type: Object}, // Phú Gia Lê -
+        author: {
+            username: String,
+            avatar: String,
+            personal_concept: String,
+            main_color: String,
+            user_bio: String,
+            authorSlug: String,
+        },
         title: { type: String, sparse: true },
-        type: {type: String},
+        type: { type: String },
         content: { type: String, sparse: true },
         image: { type: String, require: true },
         description: { type: String, require: true },
