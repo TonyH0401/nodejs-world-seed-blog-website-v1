@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  /* padding: 150px; */
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -7,12 +7,20 @@ a {
   color: #00B7FF;
 }
 
-/* BASIC */
-
-html {
-  background-color: #56baed;
+.background {
+  background: url('https://images.unsplash.com/photo-1549645402-a9d655c5c344?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80') repeat-y;
+  background-size: 100%;
+  min-height: 100vh;
 }
 
+/* register-panel */
+.register-panel {
+  /* width: 100%; */
+  /* margin-top: 150px; */
+  padding-top: 100px;
+}
+
+/* BASIC */
 body {
   font-family: "Poppins", sans-serif;
   height: 100vh;
@@ -20,7 +28,7 @@ body {
 
 a {
   color: #92badd;
-  display:inline-block;
+  display: inline-block;
   text-decoration: none;
   font-weight: 400;
 }
@@ -30,23 +38,28 @@ h2 {
   font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
-  display:inline-block;
-  margin: 40px 8px 10px 8px; 
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
   color: #cccccc;
 }
 
-
+/* .trang-detail {
+  background-color: red;
+} */
+/* .container, body{
+  background-color: red;
+} */
 
 /* STRUCTURE */
 
 .wrapper {
   display: flex;
   align-items: center;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   min-height: 100%;
-  padding: 20px;
+  padding: 80px;
 }
 
 #formContent {
@@ -58,9 +71,10 @@ h2 {
   max-width: 450px;
   position: relative;
   padding: 0px;
-  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   text-align: center;
+  /* opacity: 0.4; */
 }
 
 #formFooter {
@@ -75,7 +89,6 @@ h2 {
 
 
 /* TABS */
-
 h2.inactive {
   color: #cccccc;
 }
@@ -88,8 +101,13 @@ h2.active {
 
 
 /* FORM TYPOGRAPHY*/
+.top-buffer {
+  margin-top: 150px;
+}
 
-input[type=button], input[type=submit], input[type=reset]  {
+input[type=button],
+input[type=submit],
+input[type=reset] {
   background-color: #56baed;
   border: none;
   color: white;
@@ -99,8 +117,8 @@ input[type=button], input[type=submit], input[type=reset]  {
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-  box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
   margin: 5px 20px 40px 20px;
@@ -109,16 +127,19 @@ input[type=button], input[type=submit], input[type=reset]  {
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  /* display: flex; */
   align-items: center;
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+input[type=button]:hover,
+input[type=submit]:hover,
+input[type=reset]:hover {
   background-color: #39ace7;
   align-items: center;
 }
 
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+input[type=button]:active,
+input[type=submit]:active,
+input[type=reset]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -127,7 +148,10 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   align-items: center;
 }
 
-input[type=text], input[type=password], input[type=email], input[type=age] {
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=age] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -149,9 +173,14 @@ input[type=text], input[type=password], input[type=email], input[type=age] {
   align-items: center;
 }
 
-input[type=text]:focus {
-  background-color: #fff;
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=age]:focus {
+  /* background-color: #fff; */
+  background-color: black;
   border-bottom: 2px solid #5fbae9;
+  color: #da7f8f;
 }
 
 input[type=text]:placeholder {
@@ -178,6 +207,7 @@ input[type=text]:placeholder {
     -webkit-transform: translate3d(0, -100%, 0);
     transform: translate3d(0, -100%, 0);
   }
+
   100% {
     opacity: 1;
     -webkit-transform: none;
@@ -191,6 +221,7 @@ input[type=text]:placeholder {
     -webkit-transform: translate3d(0, -100%, 0);
     transform: translate3d(0, -100%, 0);
   }
+
   100% {
     opacity: 1;
     -webkit-transform: none;
@@ -199,23 +230,49 @@ input[type=text]:placeholder {
 }
 
 /* Simple CSS3 Fade-in Animation */
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
 
 .fadeIn {
-  opacity:0;
-  -webkit-animation:fadeIn ease-in 1;
-  -moz-animation:fadeIn ease-in 1;
-  animation:fadeIn ease-in 1;
+  opacity: 0;
+  -webkit-animation: fadeIn ease-in 1;
+  -moz-animation: fadeIn ease-in 1;
+  animation: fadeIn ease-in 1;
 
-  -webkit-animation-fill-mode:forwards;
-  -moz-animation-fill-mode:forwards;
-  animation-fill-mode:forwards;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 
-  -webkit-animation-duration:1s;
-  -moz-animation-duration:1s;
-  animation-duration:1s;
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 1s;
 }
 
 .fadeIn.first {
@@ -258,7 +315,7 @@ input[type=text]:placeholder {
   color: #0d0d0d;
 }
 
-.underlineHover:hover:after{
+.underlineHover:hover:after {
   width: 100%;
 }
 
@@ -267,9 +324,151 @@ input[type=text]:placeholder {
 /* OTHERS */
 
 *:focus {
-    outline: none;
-} 
+  outline: none;
+}
 
 #icon {
-  width:60%;
+  width: 60%;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.logo {
+
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+  line-height: 70px;
+}
+
+.nav {
+  right: 0;
+  margin-right: 100px;
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+  line-height: 70px;
+}
+
+.header {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #388580;
+  margin-bottom: 20px;
+}
+
+.logo-img {
+  color: red;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.logo-img:hover {
+  color: purple;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.blog-box {
+  border: 2px solid #388580;
+  border-radius: 0 8px 8px 0;
+}
+
+.container {
+  /* min-height: 2000px; */
+  min-height: 500px;
+}
+
+.label {
+  width: 60px;
+}
+
+.card-body.index {
+  color: #fff;
+}
+
+.card-title {
+  color: #388580;
+}
+
+.created-date {
+  font-size: 12px;
+  color: rgba(253, 160, 133, 1)
+}
+
+/* trang blog chi tiết */
+.detail-blog {
+  opacity: 0.9;
+  font-size: 18px;
+  font-weight: 550px;
+}
+/* trang tạo blog */
+.create-page {
+  color: #388580;
+} 
+ .create-page input {
+  opacity: 0.8;
+}
+
+/* trang user.hbs */
+.gradient-custom {
+  /* fallback for old browsers */
+  background: #f6d365;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
+}
+
+.edit-box {
+  /* font-size: 5px; */
+  height: 40px;
+  width: 130px;
+  line-height: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+.edit-box>input {
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  height: 80%;
+  width: 100%;
+}
+
+textarea {
+  background-color: #cccccc;
+  border: #388580 2px solid;
+  color: black;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 17px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #cccccc;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  vertical-align: top;
+}
+
+/* textarea:focus {
+  background-color: black;
+  border-radius: 6px;
+  font-weight: 500;
+  border: #388580 2px solid;
+} */

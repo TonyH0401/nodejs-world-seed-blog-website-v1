@@ -1,12 +1,22 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+var slug = require('mongoose-slug-generator');
+mongoose.plugin(slug);
 
 const Users = new Schema(
     {
-        username: {type: String, require: true},
-        email: {type: String, require: true},
+        username: { type: String, require: true },
+        email: { type: String, require: true },
         age: Number,
-        password: {type: String, require: true}
+        password: { type: String, require: true },
+        phone: { type: String },
+        blog_counter: { type: Number },
+        user_bio: { type: String },
+        avatar: { type: String },
+        slug: { type: String, slug: 'username', sparse: true }
+    },
+    {
+        timestamps: true,
     }
 )
 

@@ -1,0 +1,49 @@
+<div class="background create-page">
+    <div class="container">
+        <p class="h2 mb-4">Tạo Blog</p>
+        <form method="POST" action="/create" enctype="multipart/form-data">
+            <div class="mb-3 form-group w-50">
+                <label for="title" class="form-label">
+                    <p class="label">Tiêu đề</p>
+                </label>
+                <input name="title" type="text" class="form-control" id="description" aria-describedby="emailHelp">
+            </div>
+
+            <div class="mb-3 form-group w-50">
+                <label for="description" class="form-label">
+                    <p class="label">Mô tả</p>
+                </label>
+                <input name="description" type="text" class="form-control" id="description"
+                    aria-describedby="emailHelp">
+            </div>
+
+            <div class="mb-3 form-group w-50">
+                <label for="author" class="form-label">
+                    <p class="label">Tác giả</p>
+                </label>
+                <input name="author" type="text" class="form-control" id="name" aria-describedby="emailHelp">
+            </div>
+
+            <div class="mb-3 form-group w-100">
+                <label for="content">Nội dung</label>
+                <textarea name="content" id="content" cols="100" rows="10"></textarea>
+            </div>
+
+            <div class="form-group">
+                {{!-- <label for="">Ảnh</label> --}}
+                <label for="photo">Chọn ảnh</label>
+                <input type="file" name="photo" id="photo" /><br />
+            </div>
+
+            {{#if message}}
+            <div class="w-75 alert alert-danger">
+                {{message}}
+            </div>
+            {{/if}}<br>
+
+
+            <button type="submit" class="btn btn-primary">Đăng Blog</button>
+            <a href="/"><button type="button" class="btn btn-danger">Cancel</button></a>
+        </form>
+    </div>
+</div>
