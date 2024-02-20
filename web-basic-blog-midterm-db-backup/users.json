@@ -1,0 +1,58 @@
+[{
+  "_id": {
+    "$oid": "6266cc9259c4f187683bcf27"
+  },
+  "username": "le gia phu",
+  "email": "520H0401@gmail.com",
+  "age": 20,
+  "password": "520H0401",
+  "phone": null,
+  "blog_counter": null,
+  "user_bio": null,
+  "createdAt": {
+    "$date": "2022-04-25T16:30:10.209Z"
+  },
+  "updatedAt": {
+    "$date": "2022-04-25T16:30:10.209Z"
+  },
+  "slug": "le-gia-phu",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62667cb2032a4c8c66b8fd4e"
+  },
+  "username": "admin2",
+  "email": "admin2@gmail.com",
+  "age": 12,
+  "password": "admin2",
+  "phone": "",
+  "blog_counter": null,
+  "user_bio": "một ngày mới xin chào bạn",
+  "slug": "admin2",
+  "updatedAt": {
+    "$date": "2022-04-25T10:49:22.155Z"
+  },
+  "createdAt": {
+    "$date": "2022-04-25T10:49:22.155Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6266ba0059c4f187683bcec4"
+  },
+  "username": "admin",
+  "email": "admin@gmail.com",
+  "age": 20,
+  "password": "admin",
+  "phone": "0852",
+  "blog_counter": null,
+  "user_bio": "ngày mới",
+  "slug": "admin",
+  "updatedAt": {
+    "$date": "2022-04-25T15:10:56.691Z"
+  },
+  "createdAt": {
+    "$date": "2022-04-25T15:10:56.691Z"
+  },
+  "__v": 0
+}]

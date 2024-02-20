@@ -1,0 +1,68 @@
+[{
+  "_id": {
+    "$oid": "6266650ed98bf41745b8bb87"
+  },
+  "title": "The Science of Deduction",
+  "content": "Sherlock Holmes took his bottle from the corner of the mantel-piece and his hypodermic syringe from its neat morocco case.",
+  "image": "https://picsum.photos/570/300",
+  "description": "This is a small description for this blog. Hope you guys enjoy it ^.^",
+  "createdAt": {
+    "$date": "2022-04-25T09:08:30.683Z"
+  },
+  "updatedAt": {
+    "$date": "2022-04-25T09:08:30.683Z"
+  },
+  "slug": "the-science-of-deduction",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62666e46d09f46d547a67eae"
+  },
+  "author": "Viết Tuân",
+  "title": "51 tỉnh, thành không còn 'vùng đỏ'",
+  "content": "heo quy định của Chính phủ, địa bàn cấp 3 phải hạn chế hoặc dừng nhiều hoạt động như: Sự kiện trong nhà, ngoài trời; vận tải hành khách công cộng; bán hàng rong, vé số dạo. Cơ quan, công sở giảm số người làm việc, tăng cường làm việc trực tuyến.\r\n\r\nĐịa bàn cấp 4 hạn chế nhiều hoạt động như siêu thị, trung tâm thương mại, cửa hàng tiện ích, chợ đầu mối. Các dịch vụ phải ngừng hoạt động gồm: Vũ trường, karaoke, massage, bar, Internet, trò chơi điện tử, làm tóc, làm đẹp; bán hàng rong, vé số dạo; cơ sở tín ngưỡng, tôn giáo, thờ tự; bảo tàng, triển lãm, rạp chiếu phim; địa điểm biểu diễn văn hóa, nghệ thuật, thể dục thể thao.\r\n\r\nNhư vậy, với số xã vùng xanh tăng, vùng cam và đỏ giảm, nhiều địa phương sẽ tiếp tục nới lỏng các hoạt động kinh tế - xã hội.",
+  "image": "1.png",
+  "description": "13 Thời sựThứ hai, 25/4/2022, 10:49 (GMT+7) 51 tỉnh, thành không còn 'vùng đỏ' Toàn quốc có 51 tỉnh, thành không còn địa bàn nguy cơ dịch bệnh cấp 4 (vùng đỏ), theo cập nhật của Bộ Y tế ngày 25/4.",
+  "createdAt": {
+    "$date": "2022-04-25T09:47:50.039Z"
+  },
+  "updatedAt": {
+    "$date": "2022-04-25T09:47:50.039Z"
+  },
+  "slug": "51-tinh-thanh-khong-con-vung-d",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6267539ad84fbb5dcf822ce1"
+  },
+  "author": "Gia Minh",
+  "title": "TP HCM thông xe 2 tuyến đường",
+  "content": "Công trình triển khai từ năm 2018 nhưng vướng giải phóng mặt bằng nên bị gián đoạn, có thời gian phải tạm ngưng. Gần 1.200 hộ dân bị ảnh hưởng, tổng kinh phí bồi thường, giải toả hơn 1.400 tỷ đồng, tách thành dự án riêng do UBND huyện Hóc Môn thực hiện.\r\n\r\nĐường Đặng Thúc Vịnh thuộc trục kết nối thành phố qua Bình Dương, Long An. Trước khi được nâng cấp, mặt đường rộng 7-8 m, thường xuyên ngập nước, kẹt xe, ảnh hưởng đi lại và đời sống cùa người dân. Dự án nâng cấp, mở rộng đường góp phần hoàn chỉnh mạng lưới giao thông cửa ngõ Tây Bắc thành phố.\r\n\r\nTrước đó tháng 10/2020, công trình mở rộng đường Tô Ký dài 2,4 km kết nối trực tiếp với tuyến Đặng Thúc Vịnh cũng được thành phố đưa vào khai thác sau 3 năm thi công, giúp tăng kết nối giao thông cho khu vực và thuận lợi cho hoạt động kinh doanh, buôn bán của người dân.",
+  "image": "11.png",
+  "description": "Công trình mở rộng đường Đặng Thúc Vịnh cùng tuyến song hành đại lộ Võ Văn Kiệt thông xe sáng 26/4, gỡ điểm nghẽn giao thông ở trung tâm và cửa ngõ thành phố.",
+  "createdAt": {
+    "$date": "2022-04-26T02:06:18.512Z"
+  },
+  "updatedAt": {
+    "$date": "2022-04-26T02:06:18.512Z"
+  },
+  "slug": "tp-hcm-thong-xe-2-tuyen-duong",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "626900d6998a0022d135f7f6"
+  },
+  "author": "Vũ Hoàng",
+  "title": "Đổi chiến lược, Nga có thể kéo dài xung đột Ukraine",
+  "content": "Bộ trưởng Quốc phòng Nga Sergei Shoigu hôm 19/4 tuyên bố lực lượng Nga sẽ \"tiến công một cách thận trọng\" trong giai đoạn hai của chiến dịch. Giới quan sát cho rằng Nga thay đổi chiến lược sau khi nhận ra cách đánh chớp nhoáng không đạt hiệu quả ở giai đoạn đầu cuộc xung đột.\r\n\r\n\"Họ nhận ra rằng chiến lược đánh nhanh thắng nhanh không thành công\", Ausseur nói. \"Vì vậy, họ đã quay trở lại với cách đánh truyền thống: Nếu không thể đè bẹp ý chí của đối phương, bạn sẽ nghiền nát chúng\".\r\n\r\n\"Họ sẽ Mariupol hóa cả chiến dịch\", Ausseur cho biết thêm, đề cập đến thành phố cảng phía nam Ukraine, nơi đã bị vây chặt và hứng chịu hàng loạt đợt tấn công không ngừng từ các lực lượng Nga suốt hai tháng qua. Theo giới chuyên gia, thành phố này thất thủ chỉ còn là vấn đề thời gian.\r\n\r\n\"Có vẻ như quân đội Nga muốn theo đuổi chiến thuật 'tiêu thổ', tìm cách bẻ gãy ý chí của quân đội Ukraine bằng lực lượng áp đảo và hỏa lực pháo binh không ngừng, nhằm buộc dân thường phải sơ tán, tách họ ra khỏi lực lượng phòng thủ\", Colin Clarke, nhà nghiên cứu cấp cao tại Trung tâm Soufan, tổ chức tư vấn có trụ sở ở New York, Mỹ, nhận định.\r\n\r\nMột số chuyên gia cho rằng quân đội Nga cũng tìm cách tạo thế gọng kìm bằng các đợt tiến quân ở phía đông sông Dnipro, nhằm bao vây phần lớn lực lượng Ukraine theo chiến thuật \"Mariupol hóa\".\r\n\r\nClarke cho biết để tránh bị dồn vào gọng kìm bao vây, lực lượng phòng thủ Ukraine đã phân tán trên nhiều mặt trận, nhằm kéo giãn tuyến tiếp tế và liên lạc của Nga. \"Chiến lược đó đến nay đã thành công\", ông nói.\r\n\r\nĐể hỗ trợ Ukraine trong giai đoạn giao tranh khốc liệt này, phương Tây đã tăng cường viện trợ vũ khí hạng nặng, đặc biệt là sau khi Tổng thống Mỹ Joe Biden công bố gói hỗ trợ quân sự trị giá 800 triệu USD nhằm giúp Ukraine trụ vững ở chiến trường Donbass.\r\n\r\nTuy nhiên, để kịp thời hỗ trợ Ukraine, họ cũng phải chạy đua với thời gian. Theo Mark Cancian, cố vấn cấp cao tại Trung tâm Nghiên cứu Chiến lược và Quốc tế (CSIS), các khí tài như xe tăng, xe bọc thép \"sẽ phải mất vài tuần, thậm chí vài tháng\" mới đến được Ukraine.\r\n\r\n\"Ngay cả khi phương tiện đã xuất kho ở châu Âu, chúng vẫn cần trải qua một số quy trình bảo dưỡng trước khi sẵn sàng lên đường tới Ukraine\", ông cho hay.\r\n\r\nCác thành viên NATO đã bắt đầu cung cấp cho Ukraine hệ thống tên lửa phòng không S-300, nhưng Ausseur lưu ý để triển khai các hệ thống này cũng cần thời gian.\r\n\r\nPháp cho biết họ đang chuyển vũ khí chống tăng Milan và pháo tự hành Caesar cho Ukraine. Song giới chuyên gia quân sự nhận định Kiev vẫn rất thiếu các vũ khí hạng nặng như lựu pháo 155 mm và những loại đạn cần thiết.\r\n\r\nUkraine sẽ cần lập một \"vòm thép\" để tự vệ trước các cuộc tấn công trên không của lực lượng không quân Nga vốn có sức mạnh áp đảo, Ausseur cảnh báo.\r\n\r\n\"Họ cần một lá chắn kiên cố để gây bất lợi cho các lực lượng Nga\", ông nói, thêm rằng nếu Ukraine không xây dựng được lưới phòng không đủ năng lực, chiến đấu cơ Nga hoàn toàn có thể làm chủ bầu trời và tiến hành các cuộc không kích suốt nhiều năm.\r\n\r\nHiện tại, rất ít nhà quan sát dự đoán xung đột sẽ sớm kết thúc.\r\n\r\n\"Kịch bản phổ biến hiện nay là sẽ có những vụ oanh tạc cường độ cao kéo dài nhiều tuần\", Ausseur cho hay.\r\n\r\nAlexander Khramchikhin thuộc Viện Phân tích Chính trị và Quân sự, trụ sở tại Moskva, cho rằng giao tranh thậm chí có thể kéo dài nhiều năm. \"Đến nay, Nga vẫn chưa đạt được mục tiêu nào ở miền đông Ukraine và rất khó biết họ sẽ đạt được những mục tiêu đó thế nào trong tương lai\", ông nói.",
+  "image": "12.png",
+  "description": "Nga đặt mục tiêu mới \"kiểm soát hoàn toàn Donbass\" và miền nam Ukraine trong giai đoạn hai chiến dịch, khiến giao tranh khốc liệt có thể kéo dài nhiều năm.",
+  "createdAt": {
+    "$date": "2022-04-27T08:37:42.870Z"
+  },
+  "updatedAt": {
+    "$date": "2022-04-27T08:37:42.870Z"
+  },
+  "slug": "doi-chien-luoc-nga-co-the-keo-dai-xung-dot-ukraine",
+  "__v": 0
+}]
